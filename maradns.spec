@@ -182,6 +182,7 @@ fi
 %{_mandir}/man1/*
 %{_mandir}/man5/*
 %{_mandir}/man8/maradns*
+%{_mandir}/man8/duende*
 %lang(fr) %{_mandir}/fr/man1/*
 %lang(fr) %{_mandir}/fr/man5/*
 %lang(fr) %{_mandir}/fr/man8/maradns*
