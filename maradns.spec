@@ -13,12 +13,6 @@ Prereq:		/sbin/chkconfig
 Prereq:		fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Provides:       nameserver
-Obsoletes:      bind
-Obsoletes:      djbdns
-Obsoletes:      pdns
-Obsoletes:      pdnsd
-Obsoletes:      dnsmasq
-Obsoletes:	sheerdns
 
 %description
 MaraDNS is (currently) an authoritative-only DNS server made with
