@@ -1,0 +1,408 @@
+diff -ur maradns-1.1.22.orig/doc/en/examples/example_authoritative_mararc.txt maradns-1.1.22/doc/en/examples/example_authoritative_mararc.txt
+--- maradns-1.1.22.orig/doc/en/examples/example_authoritative_mararc.txt	Mon Nov 18 10:03:08 2002
++++ maradns-1.1.22/doc/en/examples/example_authoritative_mararc.txt	Mon Aug 23 12:51:52 2004
+@@ -19,7 +19,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes the zone server is allowed to run
+ maxprocs = 96
+ 
+diff -ur maradns-1.1.22.orig/doc/en/examples/example_full_mararc maradns-1.1.22/doc/en/examples/example_full_mararc
+--- maradns-1.1.22.orig/doc/en/examples/example_full_mararc	Thu Jun  3 22:55:10 2004
++++ maradns-1.1.22/doc/en/examples/example_full_mararc	Mon Aug 23 12:51:26 2004
+@@ -15,9 +15,9 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The (optional) numeric GID MaraDNS will run as
+-# maradns_gid = 99
++# maradns_gid = 58
+ # The maximum number of threads (or processes, with the zone server)
+ # MaraDNS is allowed to run
+ maxprocs = 96
+diff -ur maradns-1.1.22.orig/doc/en/examples/example_mararc maradns-1.1.22/doc/en/examples/example_mararc
+--- maradns-1.1.22.orig/doc/en/examples/example_mararc	Mon Nov 18 10:03:08 2002
++++ maradns-1.1.22/doc/en/examples/example_mararc	Mon Aug 23 12:51:41 2004
+@@ -31,7 +31,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of threads (or processes, with the zone server)
+ # MaraDNS is allowed to run
+ maxprocs = 96
+diff -ur maradns-1.1.22.orig/doc/en/examples/example_recursive_mararc.txt maradns-1.1.22/doc/en/examples/example_recursive_mararc.txt
+--- maradns-1.1.22.orig/doc/en/examples/example_recursive_mararc.txt	Fri Jun  4 00:57:17 2004
++++ maradns-1.1.22/doc/en/examples/example_recursive_mararc.txt	Mon Aug 23 12:52:43 2004
+@@ -10,7 +10,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of threads (or processes, with the zone server)
+ # MaraDNS is allowed to run
+ maxprocs = 96
+diff -ur maradns-1.1.22.orig/doc/en/man/mararc.5 maradns-1.1.22/doc/en/man/mararc.5
+--- maradns-1.1.22.orig/doc/en/man/mararc.5	Mon Jun 21 21:50:15 2004
++++ maradns-1.1.22/doc/en/man/mararc.5	Mon Aug 23 12:54:41 2004
+@@ -358,7 +358,7 @@
+ damage a potential attacker can cause should there be a security
+ problem with MaraDNS. This is the UID maradns becomes.
+ 
+-The default UID is 99.
++The default UID is 58.
+ 
+ .in -3
+ \fBmaradns_gid\fR
+@@ -366,7 +366,7 @@
+ maradns_gid: The numeric GID that MaraDNS will run as.
+ This accepts a single numerical value: The GID to run MaraDNS as.
+ 
+-The default GID is 99.
++The default GID is 58.
+ 
+ .in -3
+ \fBmaximum_cache_elements\fR
+@@ -669,7 +669,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of threads (or processes, with the zone server)
+ # MaraDNS is allowed to run
+ maxprocs = 96
+diff -ur maradns-1.1.22.orig/doc/en/source/example_auth_mararc maradns-1.1.22/doc/en/source/example_auth_mararc
+--- maradns-1.1.22.orig/doc/en/source/example_auth_mararc	Thu Apr  4 02:16:54 2002
++++ maradns-1.1.22/doc/en/source/example_auth_mararc	Mon Aug 23 12:54:02 2004
+@@ -19,7 +19,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes the zone server is allowed to run
+ maxprocs = 96
+ 
+diff -ur maradns-1.1.22.orig/doc/en/source/example_full_mararc maradns-1.1.22/doc/en/source/example_full_mararc
+--- maradns-1.1.22.orig/doc/en/source/example_full_mararc	Mon Nov 18 10:02:36 2002
++++ maradns-1.1.22/doc/en/source/example_full_mararc	Mon Aug 23 12:54:24 2004
+@@ -15,9 +15,9 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The (optional) numeric GID MaraDNS will run as
+-# maradns_gid = 99
++# maradns_gid = 58
+ # The maximum number of threads (or processes, with the zone server)
+ # MaraDNS is allowed to run
+ maxprocs = 96
+diff -ur maradns-1.1.22.orig/doc/en/source/example_mararc maradns-1.1.22/doc/en/source/example_mararc
+--- maradns-1.1.22.orig/doc/en/source/example_mararc	Mon Nov 18 10:02:36 2002
++++ maradns-1.1.22/doc/en/source/example_mararc	Mon Aug 23 12:53:57 2004
+@@ -31,7 +31,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of threads (or processes, with the zone server)
+ # MaraDNS is allowed to run
+ maxprocs = 96
+diff -ur maradns-1.1.22.orig/doc/en/source/example_recursive_mararc maradns-1.1.22/doc/en/source/example_recursive_mararc
+--- maradns-1.1.22.orig/doc/en/source/example_recursive_mararc	Mon Nov 18 10:02:36 2002
++++ maradns-1.1.22/doc/en/source/example_recursive_mararc	Mon Aug 23 12:53:50 2004
+@@ -10,7 +10,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of threads (or processes, with the zone server)
+ # MaraDNS is allowed to run
+ maxprocs = 96
+diff -ur maradns-1.1.22.orig/doc/en/source/mararc.ej maradns-1.1.22/doc/en/source/mararc.ej
+--- maradns-1.1.22.orig/doc/en/source/mararc.ej	Mon Jun 21 21:49:41 2004
++++ maradns-1.1.22/doc/en/source/mararc.ej	Mon Aug 23 12:56:48 2004
+@@ -334,7 +334,7 @@
+ damage a potential attacker can cause should there be a security
+ problem with MaraDNS.  This is the UID maradns becomes.
+ <p>
+-The default UID is 99.
++The default UID is 58.
+ 
+ <h2>maradns_gid</h2>
+ maradns_gid: The numeric GID that MaraDNS will run as.
+@@ -343,7 +343,7 @@
+ This accepts a single numerical value: The GID to run MaraDNS as.
+ <p>
+ 
+-The default GID is 99.
++The default GID is 58.
+ 
+ <h2>maximum_cache_elements</h2>
+ maximum_cache_elements: The maximum number of elements we can have
+diff -ur maradns-1.1.22.orig/doc/en/tutorial/man.mararc.html maradns-1.1.22/doc/en/tutorial/man.mararc.html
+--- maradns-1.1.22.orig/doc/en/tutorial/man.mararc.html	Fri Jan 10 22:53:03 2003
++++ maradns-1.1.22/doc/en/tutorial/man.mararc.html	Mon Aug 23 12:57:17 2004
+@@ -301,7 +301,7 @@
+ damage a potential attacker can cause should there be a security
+ problem with MaraDNS.  This is the UID maradns becomes.
+ <p>
+-The default UID is 99.
++The default UID is 58.
+ 
+ <h2>maradns_gid</h2>
+ maradns_gid: The numeric GID that MaraDNS will run as.
+@@ -310,7 +310,7 @@
+ This accepts a single numerical value: The GID to run MaraDNS as.
+ <p>
+ 
+-The default GID is 99.
++The default GID is 58.
+ 
+ <h2>maximum_cache_elements</h2>
+ maximum_cache_elements: The maximum number of elements we can have
+@@ -606,7 +606,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of threads (or processes, with the zone server)
+ # MaraDNS is allowed to run
+ maxprocs = 96
+diff -ur maradns-1.1.22.orig/doc/fr/examples/example_mararc maradns-1.1.22/doc/fr/examples/example_mararc
+--- maradns-1.1.22.orig/doc/fr/examples/example_mararc	Thu Oct 24 18:16:19 2002
++++ maradns-1.1.22/doc/fr/examples/example_mararc	Mon Aug 23 12:56:41 2004
+@@ -15,7 +15,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/doc/fr/man/mararc.5 maradns-1.1.22/doc/fr/man/mararc.5
+--- maradns-1.1.22.orig/doc/fr/man/mararc.5	Mon Nov 18 09:12:13 2002
++++ maradns-1.1.22/doc/fr/man/mararc.5	Mon Aug 23 12:58:52 2004
+@@ -483,7 +483,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/doc/fr/source/example_mararc maradns-1.1.22/doc/fr/source/example_mararc
+--- maradns-1.1.22.orig/doc/fr/source/example_mararc	Mon Nov 18 09:12:13 2002
++++ maradns-1.1.22/doc/fr/source/example_mararc	Mon Aug 23 12:57:04 2004
+@@ -15,7 +15,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/doc/fr/tutorial/man.mararc.html maradns-1.1.22/doc/fr/tutorial/man.mararc.html
+--- maradns-1.1.22.orig/doc/fr/tutorial/man.mararc.html	Mon Nov 18 09:12:13 2002
++++ maradns-1.1.22/doc/fr/tutorial/man.mararc.html	Mon Aug 23 13:00:06 2004
+@@ -465,7 +465,7 @@
+ # The directory with all of the zone files
+ chroot_dir = "/etc/maradns"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/maragen/mararc.m4 maradns-1.1.22/maragen/mararc.m4
+--- maradns-1.1.22.orig/maragen/mararc.m4	Thu Oct 24 18:16:19 2002
++++ maradns-1.1.22/maragen/mararc.m4	Mon Aug 23 12:48:37 2004
+@@ -18,7 +18,7 @@
+ # The numeric UID MaraDNS will run as
+ maradns_uid = 65534
+ # The (optional) numeric GID MaraDNS will run as
+-# maradns_gid = 99
++# maradns_gid = 58
+ # The maximum number of threads (or processes, with the zone server)
+ # MaraDNS is allowed to run
+ maxprocs = 96
+diff -ur maradns-1.1.22.orig/parse/example_mararc maradns-1.1.22/parse/example_mararc
+--- maradns-1.1.22.orig/parse/example_mararc	Mon Nov 12 00:14:26 2001
++++ maradns-1.1.22/parse/example_mararc	Mon Aug 23 12:48:31 2004
+@@ -16,7 +16,7 @@
+ chroot_dir = "/var/maradns"
+ # chroot_dir = "/home/set/maradns/zone"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/server/MaraDNS.c maradns-1.1.22/server/MaraDNS.c
+--- maradns-1.1.22.orig/server/MaraDNS.c	Wed Jun 30 12:29:07 2004
++++ maradns-1.1.22/server/MaraDNS.c	Mon Aug 23 12:48:38 2004
+@@ -3437,7 +3437,7 @@
+ 
+         /* Drop the elevated privledges */
+         /* First, change the GID */
+-        gid = read_numeric_kvar("maradns_gid",99);
++        gid = read_numeric_kvar("maradns_gid",58);
+ #ifndef __CYGWIN__
+         /* Drop all supplemental groups */
+         setgroups(1,&gid);
+@@ -3446,7 +3446,7 @@
+         setgid(gid);
+ 
+         /* Next, change the UID */
+-        uid = read_numeric_kvar("maradns_uid",99);
++        uid = read_numeric_kvar("maradns_uid",58);
+         if(uid < 10)
+             harderror(L_BADUID); /* "maradns_uid is less than 10 or not a number.\nThis uid must have a value of 10 or more" */
+         if(setuid(uid) != 0)
+diff -ur maradns-1.1.22.orig/sqa/dead_host_simulate.c maradns-1.1.22/sqa/dead_host_simulate.c
+--- maradns-1.1.22.orig/sqa/dead_host_simulate.c	Sun Jan 12 07:52:43 2003
++++ maradns-1.1.22/sqa/dead_host_simulate.c	Mon Aug 23 12:49:30 2004
+@@ -81,7 +81,7 @@
+         harderror("Binding problem--must be root");
+     
+     /* Drop elevated privledges */
+-    if(setuid(99) != 0)
++    if(setuid(58) != 0)
+         harderror("setuid failed");
+ 
+     /* Make sure they are dropped */
+diff -ur maradns-1.1.22.orig/sqa/testbed/mararc maradns-1.1.22/sqa/testbed/mararc
+--- maradns-1.1.22.orig/sqa/testbed/mararc	Wed Oct 17 02:44:46 2001
++++ maradns-1.1.22/sqa/testbed/mararc	Mon Aug 23 13:01:31 2004
+@@ -12,7 +12,7 @@
+ chroot_dir = "/var/maradns"
+ # chroot_dir = "/home/set/maradns/zone"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/sqa/testbed/mararc.1 maradns-1.1.22/sqa/testbed/mararc.1
+--- maradns-1.1.22.orig/sqa/testbed/mararc.1	Sat Mar  2 10:56:16 2002
++++ maradns-1.1.22/sqa/testbed/mararc.1	Mon Aug 23 13:01:46 2004
+@@ -15,7 +15,7 @@
+ chroot_dir = "/var/maradns"
+ # chroot_dir = "/home/set/maradns/zone"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/sqa/testbed/mararc.2 maradns-1.1.22/sqa/testbed/mararc.2
+--- maradns-1.1.22.orig/sqa/testbed/mararc.2	Sat Mar  2 10:56:22 2002
++++ maradns-1.1.22/sqa/testbed/mararc.2	Mon Aug 23 13:01:28 2004
+@@ -12,7 +12,7 @@
+ chroot_dir = "/var/maradns"
+ # chroot_dir = "/home/set/maradns/zone"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/sqa/testbed/mararc.4 maradns-1.1.22/sqa/testbed/mararc.4
+--- maradns-1.1.22.orig/sqa/testbed/mararc.4	Sat Mar  2 10:56:30 2002
++++ maradns-1.1.22/sqa/testbed/mararc.4	Mon Aug 23 13:01:43 2004
+@@ -12,7 +12,7 @@
+ chroot_dir = "/var/maradns"
+ # chroot_dir = "/home/set/maradns/zone"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/sqa/testbed/mararc.5 maradns-1.1.22/sqa/testbed/mararc.5
+--- maradns-1.1.22.orig/sqa/testbed/mararc.5	Sat Mar  2 10:56:36 2002
++++ maradns-1.1.22/sqa/testbed/mararc.5	Mon Aug 23 13:01:24 2004
+@@ -12,7 +12,7 @@
+ chroot_dir = "/var/maradns"
+ # chroot_dir = "/home/set/maradns/zone"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/sqa/testbed/mararc.6 maradns-1.1.22/sqa/testbed/mararc.6
+--- maradns-1.1.22.orig/sqa/testbed/mararc.6	Sat Mar  2 10:56:43 2002
++++ maradns-1.1.22/sqa/testbed/mararc.6	Mon Aug 23 13:01:38 2004
+@@ -12,7 +12,7 @@
+ chroot_dir = "/var/maradns"
+ # chroot_dir = "/home/set/maradns/zone"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/sqa/testbed/mararc.7 maradns-1.1.22/sqa/testbed/mararc.7
+--- maradns-1.1.22.orig/sqa/testbed/mararc.7	Sat Mar  2 10:56:49 2002
++++ maradns-1.1.22/sqa/testbed/mararc.7	Mon Aug 23 13:01:21 2004
+@@ -12,7 +12,7 @@
+ chroot_dir = "/var/maradns"
+ # chroot_dir = "/home/set/maradns/zone"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/sqa/testbed/mararc.8 maradns-1.1.22/sqa/testbed/mararc.8
+--- maradns-1.1.22.orig/sqa/testbed/mararc.8	Thu Dec 26 03:21:01 2002
++++ maradns-1.1.22/sqa/testbed/mararc.8	Mon Aug 23 13:01:35 2004
+@@ -12,7 +12,7 @@
+ chroot_dir = "/var/maradns"
+ # chroot_dir = "/home/set/maradns/zone"
+ # The numeric UID MaraDNS will run as
+-maradns_uid = 99
++maradns_uid = 58
+ # The maximum number of processes MaraDNS is allowed to use
+ maxprocs = 64
+ 
+diff -ur maradns-1.1.22.orig/test/rtest.c maradns-1.1.22/test/rtest.c
+--- maradns-1.1.22.orig/test/rtest.c	Sun Jan 12 07:53:58 2003
++++ maradns-1.1.22/test/rtest.c	Mon Aug 23 12:49:32 2004
+@@ -90,7 +90,7 @@
+         harderror("Binding problem--must be root");
+     
+     /* Drop elevated privledges */
+-    if(setuid(99) != 0)
++    if(setuid(58) != 0)
+         harderror("setuid failed");
+ 
+     /* Make sure they are dropped */
+diff -ur maradns-1.1.22.orig/test/test_zoneserver.c maradns-1.1.22/test/test_zoneserver.c
+--- maradns-1.1.22.orig/test/test_zoneserver.c	Sun Jan 12 07:54:20 2003
++++ maradns-1.1.22/test/test_zoneserver.c	Mon Aug 23 12:48:36 2004
+@@ -241,7 +241,7 @@
+         }
+ 
+     /* Drop root privledges */
+-    if(setuid(99) != 0) {
++    if(setuid(58) != 0) {
+         printf("Could not drop root privledges\n");
+ 	exit(1);
+ 	}
