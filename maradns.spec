@@ -2,7 +2,7 @@ Summary:	A (currently) authoritative-only DNS server made with security in mind
 Summary(pl):	Tylko autorytatywny (na razie) serwer DNS zrobiony z my¶l± o bezpieczeñstwie
 Name:		maradns
 Version:	1.1.29
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Networking/Daemons
 Source0:	http://www.maradns.org/download/1.1/%{name}-%{version}.tar.bz2
@@ -64,7 +64,7 @@ transfery stref itp.
 %patch0 -p1
 
 # kill precompiled x86 objects
-rm -f {qual,tcp}/*.o
+rm -f {parse,qual,tcp}/*.o
 
 %build
 %{__make} \
@@ -101,8 +101,8 @@ rm -rf doc/*/man
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`getgid named`" ]; then
-	if [ "`getgid named`" != "58" ]; then
+if [ -n "`/usr/bin/getgid named`" ]; then
+	if [ "`/usr/bin/getgid named`" != "58" ]; then
 		echo "Error: group named doesn't have gid=58. Correct this before installing maradns." 1>&2
 		exit 1
 	fi
@@ -113,13 +113,13 @@ else
 		/usr/sbin/groupadd -g 58 named
 	fi
 fi
-if [ -n "`id -u named 2>/dev/null`" ]; then
-	if [ "`id -u named`" != "58" ]; then
+if [ -n "`/bin/id -u named 2>/dev/null`" ]; then
+	if [ "`/bin/id -u named`" != "58" ]; then
 		echo "Error: user named doesn't have uid=58. Correct this before installing maradns." 1>&2
 		exit 1
 	fi
 else
-	if [ -n "`id -u maradns 2>/dev/null`" -a "`id -u maradns`" = "58" ]; then
+	if [ -n "`/bin/id -u maradns 2>/dev/null`" -a "`/bin/id -u maradns`" = "58" ]; then
 		/usr/sbin/usermod -d /tmp -l named maradns
 	else
 		/usr/sbin/useradd -u 58 -g 58 -d /tmp -s /bin/false -c "maraDNS user" named
