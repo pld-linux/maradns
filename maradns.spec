@@ -1,7 +1,7 @@
 Summary:	A (currently) authoritative-only DNS server made with security in mind
 Name:		maradns
 Version:	0.8.26
-Release:	3
+Release:	4
 License:	Public domain
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -33,6 +33,7 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_mandir}/man{1,5,8}} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/{maradns,rc.d/init.d}
 install server/maradns tuzona/zoneserver tuzona/getzone $RPM_BUILD_ROOT%{_sbindir}
 install tools/askmara $RPM_BUILD_ROOT%{_bindir}
+install tools/benchmark $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/maradns
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/zoneserver
 install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/mararc
