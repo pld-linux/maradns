@@ -15,13 +15,18 @@
 . /etc/sysconfig/network
 
 # Check that networking is up.
-if is_no "${NETWORKING}"; then
-        msg_network_down "zoneserver"
-	exit 1
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		msg_network_down "zoneserver"
+		exit 1
+	fi
+else
+	exit 0
 fi
 			
 # Sanity check
 [ -e /etc/mararc ] || exit 0
+
 
 # See how we were called.
 case "$1" in
@@ -30,45 +35,51 @@ case "$1" in
 	if [ ! -f /var/lock/subsys/zoneserver ]; then
 		msg_starting "zoneserver"
 	 	zoneserver -f /etc/mararc > /var/log/zoneserver &
-      busy
-      # what if it won't start on time? wait a bit for it :)
-      sleep 1
-      pid=`pidofproc zoneserver`
-      if [ -n "$pid" ]; then
-         RETVAL=0
-         touch /var/lock/subsys/zoneserver
-         log_success "zoneserver startup"
-         ok
-      else
-         RETVAL=1
-         log_failed "zoneserver startup"
-         fail
-      fi
+		busy
+		# what if it won't start on time? wait a bit for it :)
+		sleep 1
+		pid=`pidofproc zoneserver`
+		if [ -n "$pid" ]; then
+			RETVAL=0
+			touch /var/lock/subsys/zoneserver
+			log_success "zoneserver startup"
+			ok
+		else
+			RETVAL=1
+			log_failed "zoneserver startup"
+			fail
+		fi
 	else
 		msg_already_running "zoneserver"
 		exit 1
 	fi
-        ;;
+	;;
   stop)
-        if [ -f /var/lock/subsys/zoneserver ]; then
-        	msg_stopping "zoneserver"
-        	killproc zoneserver
-        	rm -f /var/lock/subsys/zoneserver >/dev/null 2>&1
-        else
-	        msg_not_running "zoneserver"
-                exit 1
-        fi
+	if [ -f /var/lock/subsys/zoneserver ]; then
+		msg_stopping "zoneserver"
+		killproc zoneserver
+		RETVAL=$?
+		rm -f /var/lock/subsys/zoneserver >/dev/null 2>&1
+	else
+		msg_not_running "zoneserver"
+		exit 1
+	fi
 	;;
   status)
 	status zoneserver
 	;;
-  restart)
+  restart|reload)
 	$0 stop
 	$0 start
+	exit $?
+	;;
+  force-reload)
+	$0 stop && $0 start
+	exit $?
 	;;
   *)
-        msg_Usage "$0 {start|stop|status|restart}"
-        exit 1
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 1
 esac
 
 exit $RETVAL
