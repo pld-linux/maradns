@@ -10,8 +10,15 @@ Source0:	http://www.maradns.org/download/%{name}-%{version}.tar.bz2
 Source1:	%{name}.init
 Source2:	zoneserver.init
 Source3:	mararc
-Prereq:		/sbin/chkconfig
-Prereq:		fileutils
+PreReq:		rc-scripts
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/bin/id
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
+Requires(post,preun):	/sbin/chkconfig
+Requires(post):	fileutils
+Requires(postun):	/usr/sbin/userdel
+Requires(postun):	/usr/sbin/groupdel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Provides:       nameserver
 
@@ -27,9 +34,10 @@ my¶l± o bezpieczeñstwie.
 Summary:	Handle zone transfers for MaraDNS
 Summary(pl):	Obs³uga transferów stref dla MaraDNS
 Group:		Networking/Daemons
-Requires:	maradns = %{version}
-Prereq:		/sbin/chkconfig
-Prereq:		fileutils
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
+Requires(post):	fileutils
+Requires:	%{name} = %{version}
 
 %description zoneserver
 zoneserver listens on port 53/tcp and handles dns zone transfers.
@@ -68,9 +76,9 @@ install doc/en/examples/example_csv1 $RPM_BUILD_ROOT%{_sysconfdir}/maradns/db.ex
 > $RPM_BUILD_ROOT%{_localstatedir}/log/maradns
 > $RPM_BUILD_ROOT%{_localstatedir}/log/zoneserver
 
-install doc/en/man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1/
-install doc/en/man/*.5 $RPM_BUILD_ROOT%{_mandir}/man5/
-install doc/en/man/*.8 $RPM_BUILD_ROOT%{_mandir}/man8/
+install doc/en/man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install doc/en/man/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
+install doc/en/man/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
 rm -rf doc/{man,detailed/man_macros}
 
@@ -78,11 +86,21 @@ rm -rf doc/{man,detailed/man_macros}
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if ! id -g maradns > /dev/null 2>&1 ; then
-        %{_sbindir}/groupadd -g 58 maradns
+if [ -n "`getgid maradns`" ]; then
+	if [ "`getgid maradns`" != "58" ]; then
+		echo "Error: group maradns doesn't have gid=58. Correct this before installing maradns." 1>&2
+		exit 1
+	fi
+else
+	/usr/sbin/groupadd -g 58 maradns
 fi
-if ! id -u maradns > /dev/null 2>&1 ; then
-        %{_sbindir}/useradd -u 58 -g 58 -d /dev/null -s /bin/false -c "maraDNS user" maradns
+if [ -n "`id -u maradns 2>/dev/null`" ]; then
+	if [ "`id -u maradns`" != "58" ]; then
+		echo "Error: user maradns doesn't have uid=58. Correct this before installing maradns." 1>&2
+		exit 1
+	fi
+else
+	/usr/sbin/useradd -u 58 -g 58 -d /dev/null -s /bin/false -c "maraDNS user" maradns
 fi
 
 %post
@@ -94,6 +112,12 @@ else
 fi
 touch %{_localstatedir}/log/maradns
 chmod 640 %{_localstatedir}/log/maradns
+
+%postun
+if [ "$1" = "0" ]; then
+	/usr/sbin/userdel maradns
+	/usr/sbin/groupdel maradns
+fi
 
 %post zoneserver
 /sbin/chkconfig --add zoneserver
@@ -119,12 +143,6 @@ if [ "$1" = "0" ]; then
                 /etc/rc.d/init.d/zoneserver stop 1>&2
         fi
         /sbin/chkconfig --del zoneserver
-fi
-
-%postun
-if [ "$1" = "0" ]; then
-        %{_sbindir}/userdel maradns
-        %{_sbindir}/groupdel maradns
 fi
 
 %files
