@@ -2,7 +2,7 @@ Summary:	A (currently) authoritative-only DNS server made with security in mind
 Summary(pl):	Tylko autorytatywny (na razie) serwer DNS zrobiony z my¶l± o bezpieczeñstwie
 Name:		maradns
 Version:	1.1.22
-Release:	2
+Release:	3
 License:	Public Domain
 Group:		Networking/Daemons
 Source0:	http://www.maradns.org/download/1.1/%{name}-%{version}.tar.bz2
@@ -10,17 +10,23 @@ Source0:	http://www.maradns.org/download/1.1/%{name}-%{version}.tar.bz2
 Source1:	%{name}.init
 Source2:	zoneserver.init
 Source3:	mararc
+Patch0:		%{name}-default_uid.patch
+BuildRequires:	rpmbuild(macros) >= 1.159
 PreReq:		rc-scripts
-Requires(pre):	/usr/bin/getgid
 Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/groupmod
 Requires(pre):	/usr/sbin/useradd
+Requires(pre):	/usr/sbin/usermod
 Requires(post,preun):	/sbin/chkconfig
 Requires(post):	fileutils
-Requires(postun):	/usr/sbin/userdel
 Requires(postun):	/usr/sbin/groupdel
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Requires(postun):	/usr/sbin/userdel
+Provides:	group(named)
 Provides:	nameserver
+Provides:	user(named)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 MaraDNS is (currently) an authoritative-only DNS server made with
@@ -53,6 +59,7 @@ transfery stref itp.
 
 %prep
 %setup -q
+%patch0 -p1
 
 # kill precompiled x86 objects
 rm -f {qual,tcp}/*.o
@@ -64,7 +71,7 @@ rm -f {qual,tcp}/*.o
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_mandir}/man{1,5,8}} \
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_mandir}/{,fr/}man{1,5,8}} \
 	$RPM_BUILD_ROOT{%{_sysconfdir}/maradns,/etc/rc.d/init.d} \
 	$RPM_BUILD_ROOT%{_localstatedir}/log
 
@@ -82,28 +89,39 @@ install doc/en/examples/example_csv1 $RPM_BUILD_ROOT%{_sysconfdir}/maradns/db.ex
 install doc/en/man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install doc/en/man/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/en/man/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
+install doc/fr/man/*.1 $RPM_BUILD_ROOT%{_mandir}/fr/man1
+install doc/fr/man/*.5 $RPM_BUILD_ROOT%{_mandir}/fr/man5
+install doc/fr/man/*.8 $RPM_BUILD_ROOT%{_mandir}/fr/man8
 
-rm -rf doc/{man,detailed/man_macros}
+rm -rf doc/*/man
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`getgid maradns`" ]; then
-	if [ "`getgid maradns`" != "58" ]; then
-		echo "Error: group maradns doesn't have gid=58. Correct this before installing maradns." 1>&2
+if [ -n "`getgid named" ]; then
+	if [ "`getgid named`" != "58" ]; then
+		echo "Error: group named doesn't have gid=58. Correct this before installing maradns." 1>&2
 		exit 1
 	fi
 else
-	/usr/sbin/groupadd -g 58 maradns
+	if [ -n "`getgid maradns`" -a "`getgid maradns`" = "58" ]; then
+		/usr/sbin/groupmod -n named maradns
+	else
+		/usr/sbin/groupadd -g 58 named
+	fi
 fi
-if [ -n "`id -u maradns 2>/dev/null`" ]; then
-	if [ "`id -u maradns`" != "58" ]; then
-		echo "Error: user maradns doesn't have uid=58. Correct this before installing maradns." 1>&2
+if [ -n "`id -u named 2>/dev/null`" ]; then
+	if [ "`id -u named`" != "58" ]; then
+		echo "Error: user named doesn't have uid=58. Correct this before installing maradns." 1>&2
 		exit 1
 	fi
 else
-	/usr/sbin/useradd -u 58 -g 58 -d /dev/null -s /bin/false -c "maraDNS user" maradns
+	if [ -n "`id -u maradns 2>/dev/null`" -a "`id -u maradns`" = "58" ]; then
+		/usr/sbin/usermod -d /tmp -l named maradns
+	else
+		/usr/sbin/useradd -u 58 -g 58 -d /tmp -s /bin/false -c "maraDNS user" named
+	fi
 fi
 
 %post
@@ -118,8 +136,8 @@ chmod 640 %{_localstatedir}/log/maradns
 
 %postun
 if [ "$1" = "0" ]; then
-	/usr/sbin/userdel maradns
-	/usr/sbin/groupdel maradns
+	%userremove named
+	%groupremove named
 fi
 
 %post zoneserver
@@ -150,7 +168,8 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc 0QuickStart TODO 00README.FIRST CREDITS doc CHANGELOG
+%doc 0QuickStart TODO 00README.FIRST CREDITS CHANGELOG doc/{README,en}
+%lang(fr) %doc doc/fr
 %attr(754,root,root) /etc/rc.d/init.d/maradns
 %attr(755,root,root) %{_sbindir}/getzone
 %attr(755,root,root) %{_sbindir}/maradns
@@ -161,6 +180,9 @@ fi
 %{_mandir}/man1/*
 %{_mandir}/man5/*
 %{_mandir}/man8/maradns*
+%lang(fr) %{_mandir}/fr/man1/*
+%lang(fr) %{_mandir}/fr/man5/*
+%lang(fr) %{_mandir}/fr/man8/maradns*
 
 %files zoneserver
 %defattr(644,root,root,755)
@@ -168,3 +190,4 @@ fi
 %attr(755,root,root) %{_sbindir}/zoneserver
 %attr(640,root,root) %ghost %{_localstatedir}/log/zoneserver
 %{_mandir}/man8/zoneserver*
+%lang(fr) %{_mandir}/fr/man8/zoneserver*
