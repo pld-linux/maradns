@@ -128,7 +128,7 @@ fi
 %attr(755,root,root) %{_sbindir}/getzone
 %attr(755,root,root) %{_sbindir}/maradns
 %attr(755,root,root) %{_bindir}/*
-%attr(0640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/mararc
+%attr(0640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mararc
 %attr(0640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/maradns/db.example.com
 %attr(0640,root,root) %{_localstatedir}/log/maradns
 %{_mandir}/man1/*
