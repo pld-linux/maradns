@@ -27,7 +27,7 @@ fi
 # Sanity check
 [ -e /etc/mararc ] || exit 0
 
-
+RETVAL=0
 # See how we were called.
 case "$1" in
   start)
@@ -40,7 +40,6 @@ case "$1" in
 		sleep 1
 		pid=`pidofproc zoneserver`
 		if [ -n "$pid" ]; then
-			RETVAL=0
 			touch /var/lock/subsys/zoneserver
 			log_success "zoneserver startup"
 			ok
@@ -51,35 +50,29 @@ case "$1" in
 		fi
 	else
 		msg_already_running "zoneserver"
-		exit 1
 	fi
 	;;
   stop)
 	if [ -f /var/lock/subsys/zoneserver ]; then
 		msg_stopping "zoneserver"
 		killproc zoneserver
-		RETVAL=$?
 		rm -f /var/lock/subsys/zoneserver >/dev/null 2>&1
 	else
 		msg_not_running "zoneserver"
-		exit 1
 	fi
 	;;
   status)
 	status zoneserver
+	exit $?
 	;;
-  restart|reload)
+  restart|force-reload)
 	$0 stop
 	$0 start
 	exit $?
 	;;
-  force-reload)
-	$0 stop && $0 start
-	exit $?
-	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
 esac
 
 exit $RETVAL
