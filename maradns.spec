@@ -2,7 +2,7 @@ Summary:	A (currently) authoritative-only DNS server made with security in mind
 Summary(pl):	Tylko autorytatywny (na razie) serwer DNS zrobiony z my¶l± o bezpieczeñstwie
 Name:		maradns
 Version:	1.1.22
-Release:	3
+Release:	4
 License:	Public Domain
 Group:		Networking/Daemons
 Source0:	http://www.maradns.org/download/1.1/%{name}-%{version}.tar.bz2
@@ -100,7 +100,7 @@ rm -rf doc/*/man
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`getgid named" ]; then
+if [ -n "`getgid named`" ]; then
 	if [ "`getgid named`" != "58" ]; then
 		echo "Error: group named doesn't have gid=58. Correct this before installing maradns." 1>&2
 		exit 1
