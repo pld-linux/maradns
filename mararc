@@ -1,0 +1,128 @@
+# Example simplified mararc file.  
+# This only shows a subset of MaraDNS' features needed to be an
+# authoritative and recursive name server.  Look at 
+# detailed/example_full_mararc for an example showing most of the features 
+# that MaraDNS has.
+
+# Note that this example mararc file will not actually do anything
+# without modification.
+# Look in the doc/examples directory for a working example authoritative
+# nameserver, and a working recursive nameserver.
+
+# The various zones we support
+
+# We must initialize the csv1 hash, or MaraDNS will be unable to
+# load any zone files
+csv1 = {}
+
+# This is just to show the format of the file
+# Note the this is commented out.  Any line that starts with a '#' is not
+# read by the parser.  Remove the leading '# ' to enable any line that is
+# commented out
+# csv1["example.com."] = "db.example.com"
+# Naturally, we can have multiple zone files
+# csv1["example.org."] = "db.example.org"
+
+# The address this DNS server runs on.  If you want to bind 
+# to all addresses a given machine has, use "0.0.0.0".
+bind_address = "0.0.0.0"
+# The directory with all of the zone files
+chroot_dir = "/etc/maradns"
+# The numeric UID MaraDNS will run as
+maradns_uid = 58
+# The maximum number of threads (or processes, with the zone server)
+# MaraDNS is allowed to run
+maxprocs = 10
+
+# Most of the time, this can stay 3.  However, when registering
+# a domain under .de, .au, and possibly other top-level-domains, this
+# needs to have a value of 15.
+default_rrany_set = 3
+
+# The number of messages we log to stdout
+# 0: No messages except for fatal parsing errors
+# 1: Only startup messages logged (default)
+# 2: Error queries logged
+# 3: All queries logged (but not very verbosely right now)
+verbose_level = 1
+
+# Initialize the IP aliases, which are used by the list of root name servers,
+# the ACL for zone transfers, and the ACL of who gets to perform recursive
+# queries
+ipv4_alias = {}
+
+# Other root servers are in the full example mararc file
+
+# Here is a ACL which restricts who is allowed to perform zone transfer from 
+# the zoneserver program
+
+# VERY IMPORTANT: Do not put spaces in the zone_transfer_acl list
+# Good: zone_transfer_acl = "10.2.3.4,10.2.3.6"
+# Bad:  zone_transfer_acl = "10.2.3.4, 10.2.3.6"
+
+# Simplest form: 10.1.1.1/24 (IP: 10.1.1.1, 24 left bits in IP need to match)
+# and 10.100.100.100/255.255.255.224 (IP: 10.100.100.100, netmask
+# 255.255.255.224) are allowed to connect to the zone server 
+# zone_transfer_acl = "10.1.1.1/24,10.100.100.100/255.255.255.224"
+
+# If you want to enable recursion on the loopback interface, uncomment
+# the relevent lines in the following section
+
+# Recursive ACL: Who is allowd to perform recursive queries.  The format
+# is identical to that of "zone_transfer_acl", including ipv4_alias support
+
+# ipv4_alias["localhost"] = "127.0.0.0/8"
+# recursive_acl = "localhost"
+
+# Random seed file: The file form which we read 16 bytes from to get the
+# 128-bit random seed.  This is ideally a file which is a good source
+# of random numbers, but can also be a fixed file if your OS does not have
+# a decent random number generator (make sure the contents of that file is
+# random and with 600 perms, owned by root, since we read the file *before*
+# dropping root privledges)
+
+# random_seed_file = "/dev/urandom"
+
+# The maximum number of elements we can have in the cache.  If we have more 
+# elements in the cache than this amount, the "custodian" kicks in to effect,
+# removing elements at random from the cache (8 elements removed per query)
+# until we are at the 99% level or so again.
+
+# maximum_cache_elements = 1024
+
+# The root servers which we use when making recursive queries.
+
+# The following line must be uncommented to enable recursive queries
+# root_servers = {}
+
+# Various sets of root name servers
+# Note: Netmasks can exist, but are ignored when specifying root name server
+
+# ICANN: the most common and most controversial root name server
+# http://www.icann.org
+ipv4_alias["icann"] = "198.41.0.4,128.9.0.107,192.33.4.12,128.8.10.90,192.203.230.10,192.5.5.241,192.112.36.4,128.63.2.53,192.36.148.17,198.41.0.10,193.0.14.129,198.32.64.12,202.12.27.33"
+
+# OSRC: http://www.open-rsc.org/
+ipv4_alias["osrc"] = "199.166.24.1,205.189.73.102,199.166.24.3,204.80.125.130,207.126.103.16,195.117.6.10,199.166.31.3,199.166.31.250,199.5.157.128,205.189.73.10,204.57.55.100,213.196.2.97"
+
+# You can choose which set of root servers to use.  Current values (set above)
+# are: icann, and osrc 
+# Other alternate registries are listed in the example_full_mararc file
+# root_servers["."] = "osrc"
+
+# We can also blacklist known spam-friendly DNS servers, so that MaraDNS 
+# refuses to query known spam-friendly DNS servers
+
+# As of August 12, 2001, azmalink.net is a known spam-friendly DNS 
+# provider (see doc/detailed/spammers/azmalink.net for details).
+# Note that this is based on IPs, and azmalink.net constantly
+# changes IPs (as they constantly have to change ISPs)
+ipv4_alias["azmalink"] = "206.169.88.7/24"
+
+# As of September 20, 2001, hiddenonline.net is a known spam-friendly
+# DNS provider (see doc/detailed/spammers/hiddenonline for details).
+ipv4_alias["hiddenonline"] = "65.107.225.0/24"
+spammers = "azmalink,hiddenonline"
+
+# And that does it for the caching at this point
+
