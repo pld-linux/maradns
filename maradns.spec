@@ -1,6 +1,6 @@
 Summary:	A (currently) authoritative-only DNS server made with security in mind
 Name:		maradns
-Version:	0.5.21
+Version:	0.6.16
 Release:	1
 Copyright:	Public domain
 Group:		Networking/Daemons
@@ -20,8 +20,6 @@ security in mind.
 %setup -q 
 
 %build
-chmod +x configure
-%configure
 %{__make} 
 
 %install
