@@ -56,6 +56,7 @@ fi
 
 %post
 /sbin/chkconfig --add maradns
+/sbin/chkconfig --add zoneserver
 if [ -f /var/lock/subsys/maradns ]; then
         /etc/rc.d/init.d/maradns restart 1>&2
 else
