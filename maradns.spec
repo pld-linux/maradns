@@ -5,8 +5,6 @@ Version:	0.8.35
 Release:	2
 License:	Public domain
 Group:		Networking/Daemons
-Group(de):	Netzwerkwesen/Server
-Group(pl):	Sieciowe/Serwery
 Source0:	http://www.maradns.org/download/%{name}-%{version}.tar.bz2
 Source1:	%{name}.init
 Source2:	zoneserver.init
@@ -29,8 +27,6 @@ my¶l± o bezpieczeñstwie.
 Summary:	Handle zone transfers for MaraDNS
 Summary(pl):	Obs³uga transferów stref dla MaraDNS
 Group:		Networking/Daemons
-Group(de):	Netzwerkwesen/Server
-Group(pl):	Sieciowe/Serwery
 Requires:	maradns = %{version}
 Prereq:		/sbin/chkconfig
 Prereq:		fileutils
