@@ -41,7 +41,7 @@ case "$1" in
          ok
       else
          RETVAL=1
-         log_fail "zoneserver startup"
+         log_failed "zoneserver startup"
          fail
       fi
 	else

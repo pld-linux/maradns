@@ -41,7 +41,7 @@ case "$1" in
          ok
       else
          RETVAL=1
-         log_fail "maradns startup"
+         log_failed "maradns startup"
          fail
       fi
 	else
