@@ -3,7 +3,7 @@ Summary(pl):	Tylko autorytatywny (na razie) serwer DNS zrobiony z my¶l± o bezpie
 Name:		maradns
 Version:	0.8.35
 Release:	2
-License:	Public domain
+License:	Public Domain
 Group:		Networking/Daemons
 Source0:	http://www.maradns.org/download/%{name}-%{version}.tar.bz2
 Source1:	%{name}.init
