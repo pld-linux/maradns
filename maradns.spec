@@ -44,7 +44,7 @@ parametry takie jak na jakim adresie ma s³uchaæ, kto mo¿e robiæ
 transfery stref itp.
 
 %prep
-%setup -q 
+%setup -q
 
 %build
 %{__make} \
