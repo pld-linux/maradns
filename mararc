@@ -93,7 +93,7 @@ ipv4_alias = {}
 # The root servers which we use when making recursive queries.
 
 # The following line must be uncommented to enable recursive queries
-# root_servers = {}
+root_servers = {}
 
 # Various sets of root name servers
 # Note: Netmasks can exist, but are ignored when specifying root name server
@@ -108,7 +108,7 @@ ipv4_alias["osrc"] = "199.166.24.1,205.189.73.102,199.166.24.3,204.80.125.130,20
 # You can choose which set of root servers to use.  Current values (set above)
 # are: icann, and osrc 
 # Other alternate registries are listed in the example_full_mararc file
-# root_servers["."] = "osrc"
+root_servers["."] = "osrc"
 
 # We can also blacklist known spam-friendly DNS servers, so that MaraDNS 
 # refuses to query known spam-friendly DNS servers
