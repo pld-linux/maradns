@@ -37,7 +37,7 @@ Group:		Networking/Daemons
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires(post):	fileutils
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description zoneserver
 zoneserver listens on port 53/tcp and handles dns zone transfers.
@@ -53,6 +53,9 @@ transfery stref itp.
 
 %prep
 %setup -q
+
+# kill precompiled x86 objects
+rm -f {qual,tcp}/*.o
 
 %build
 %{__make} \
@@ -152,9 +155,9 @@ fi
 %attr(755,root,root) %{_sbindir}/getzone
 %attr(755,root,root) %{_sbindir}/maradns
 %attr(755,root,root) %{_bindir}/*
-%attr(0640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mararc
-%attr(0640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/maradns/db.example.com
-%attr(0640,root,root) %ghost %{_localstatedir}/log/maradns
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mararc
+%attr(640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/maradns/db.example.com
+%attr(640,root,root) %ghost %{_localstatedir}/log/maradns
 %{_mandir}/man1/*
 %{_mandir}/man5/*
 %{_mandir}/man8/maradns*
