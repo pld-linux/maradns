@@ -29,24 +29,21 @@ case "$1" in
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/maradns ]; then
 		msg_starting "maraDNS"
-	 	maradns -f /etc/mararc > /dev/null &
+	 	maradns -f /etc/mararc > /var/log/maradns &
       busy
       # what if it won't start on time? wait a bit for it :)
       sleep 1
       pid=`pidofproc maradns`
       if [ -n "$pid" ]; then
          RETVAL=0
-      else
-         RETVAL=1
-      fi
-      if [ $RETVAL -eq 0 ]; then
-         log_success "marandns startup"
+         touch /var/lock/subsys/maradns
+         log_success "maradns startup"
          ok
       else
+         RETVAL=1
          log_fail "maradns startup"
          fail
       fi
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/maradns
 	else
 		msg_already_running "maraDNS"
 		exit 1
