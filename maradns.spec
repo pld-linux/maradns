@@ -20,7 +20,7 @@ Requires(post):	fileutils
 Requires(postun):	/usr/sbin/userdel
 Requires(postun):	/usr/sbin/groupdel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Provides:       nameserver
+Provides:	nameserver
 
 %description
 MaraDNS is (currently) an authoritative-only DNS server made with
@@ -106,9 +106,9 @@ fi
 %post
 /sbin/chkconfig --add maradns
 if [ -f /var/lock/subsys/maradns ]; then
-        /etc/rc.d/init.d/maradns restart 1>&2
+	/etc/rc.d/init.d/maradns restart 1>&2
 else
-        echo "Type \"/etc/rc.d/init.d/maradns start\" to start maradns" 1>&2
+	echo "Type \"/etc/rc.d/init.d/maradns start\" to start maradns" 1>&2
 fi
 touch %{_localstatedir}/log/maradns
 chmod 640 %{_localstatedir}/log/maradns
@@ -122,27 +122,27 @@ fi
 %post zoneserver
 /sbin/chkconfig --add zoneserver
 if [ -f /var/lock/subsys/zoneserver ]; then
-        /etc/rc.d/init.d/zoneserver restart 1>&2
+	/etc/rc.d/init.d/zoneserver restart 1>&2
 else
-        echo "Type \"/etc/rc.d/init.d/zoneserver start\" to start zoneserver" 1>&2
+	echo "Type \"/etc/rc.d/init.d/zoneserver start\" to start zoneserver" 1>&2
 fi
 touch %{_localstatedir}/log/zoneserver
 chmod 640 %{_localstatedir}/log/zoneserver
 
 %preun
 if [ "$1" = "0" ]; then
-        if [ -f /var/lock/subsys/maradns ]; then
-                /etc/rc.d/init.d/maradns stop 1>&2
-        fi
-        /sbin/chkconfig --del maradns
+	if [ -f /var/lock/subsys/maradns ]; then
+		/etc/rc.d/init.d/maradns stop 1>&2
+	fi
+	/sbin/chkconfig --del maradns
 fi
 
 %preun zoneserver
 if [ "$1" = "0" ]; then
-        if [ -f /var/lock/subsys/zoneserver ]; then
-                /etc/rc.d/init.d/zoneserver stop 1>&2
-        fi
-        /sbin/chkconfig --del zoneserver
+	if [ -f /var/lock/subsys/zoneserver ]; then
+		/etc/rc.d/init.d/zoneserver stop 1>&2
+	fi
+	/sbin/chkconfig --del zoneserver
 fi
 
 %files
