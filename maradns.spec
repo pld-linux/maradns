@@ -1,14 +1,15 @@
 Summary:	A (currently) authoritative-only DNS server made with security in mind
 Name:		maradns
 Version:	0.8.26
-Release:	1
+Release:	2
 License:	Public domain
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
 Source0:	http://www.maradns.org/download/%{name}-%{version}.tar.bz2
 Source1:	%{name}.init
-Source2:	mararc
+Source2:	zoneserver.init
+Source3:	mararc
 Conflicts:	bind
 Conflicts:	djbdns
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -33,6 +34,7 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_mandir}/man{1,5,8}} \
 install server/maradns tuzona/zoneserver tuzona/getzone $RPM_BUILD_ROOT%{_sbindir}
 install tools/askmara $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/maradns
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/zoneserver
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/mararc
 install doc/example_csv1 $RPM_BUILD_ROOT%{_sysconfdir}/maradns/db.example.com
 mv doc/man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1/
@@ -59,13 +61,22 @@ if [ -f /var/lock/subsys/maradns ]; then
 else
         echo "Type \"/etc/rc.d/init.d/maradns start\" to start maradns" 1>&2
 fi
+if [ -f /var/lock/subsys/zoneserver ]; then
+        /etc/rc.d/init.d/zoneserver restart 1>&2
+else
+        echo "Type \"/etc/rc.d/init.d/zoneserver start\" to start zoneserver" 1>&2
+fi
 
 %preun
 if [ "$1" = "0" ]; then
         if [ -f /var/lock/subsys/maradns ]; then
                 /etc/rc.d/init.d/maradns stop 1>&2
         fi
+        if [ -f /var/lock/subsys/zoneserver ]; then
+                /etc/rc.d/init.d/zoneserver stop 1>&2
+        fi
         /sbin/chkconfig --del maradns
+        /sbin/chkconfig --del zoneserver
 fi
 
 %postun
@@ -80,6 +91,7 @@ fi
 %doc *.gz doc/ changelog.html
 
 %attr(754,root,root)  /etc/rc.d/init.d/maradns
+%attr(754,root,root)  /etc/rc.d/init.d/zoneserver
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man1/*
