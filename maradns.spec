@@ -6,6 +6,7 @@ Release:	1
 License:	Public Domain
 Group:		Networking/Daemons
 Source0:	http://www.maradns.org/download/%{name}-%{version}.tar.bz2
+# Source0-md5:	17738068b413cbbb9c2e63274aa9d1ee
 Source1:	%{name}.init
 Source2:	zoneserver.init
 Source3:	mararc
