@@ -26,6 +26,7 @@ Requires(postun):	/usr/sbin/userdel
 Provides:	group(named)
 Provides:	nameserver
 Provides:	user(named)
+Obsoletes:	nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
