@@ -1,16 +1,17 @@
 Summary:	A (currently) authoritative-only DNS server made with security in mind
 Summary(pl):	Tylko autorytatywny (na razie) serwer DNS zrobiony z my¶l± o bezpieczeñstwie
 Name:		maradns
-Version:	1.1.22
-Release:	4
+Version:	1.1.29
+Release:	1
 License:	Public Domain
 Group:		Networking/Daemons
 Source0:	http://www.maradns.org/download/1.1/%{name}-%{version}.tar.bz2
-# Source0-md5:	e7f2d1d61c551aaa31373d5b334f9307
+# Source0-md5:	d814d32ab40b2a83560b8856a50a27d3
 Source1:	%{name}.init
 Source2:	zoneserver.init
 Source3:	mararc
 Patch0:		%{name}-default_uid.patch
+URL:		http://www.maradns.org/
 BuildRequires:	rpmbuild(macros) >= 1.159
 PreReq:		rc-scripts
 Requires(pre):	/bin/id
@@ -175,8 +176,8 @@ fi
 %attr(755,root,root) %{_sbindir}/getzone
 %attr(755,root,root) %{_sbindir}/maradns
 %attr(755,root,root) %{_bindir}/*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mararc
-%attr(640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/maradns/db.example.com
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mararc
+%attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/maradns/db.example.com
 %attr(640,root,root) %ghost %{_localstatedir}/log/maradns
 %{_mandir}/man1/*
 %{_mandir}/man5/*
