@@ -74,9 +74,6 @@ install doc/man/*.8 $RPM_BUILD_ROOT%{_mandir}/man8/
 
 rm -rf doc/{man,detailed/man_macros}
 
-gzip -9nf 0QuickStart TODO.* 00README.FIRST CREDITS \
-	`find doc -type f -a -not -name \*.html`
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -132,8 +129,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz doc changelog.html
-
+%doc 0QuickStart TODO.* 00README.FIRST CREDITS doc changelog.html
 %attr(754,root,root) /etc/rc.d/init.d/maradns
 %attr(755,root,root) %{_sbindir}/getzone
 %attr(755,root,root) %{_sbindir}/maradns
