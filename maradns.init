@@ -27,6 +27,7 @@ fi
 # Sanity check
 [ -e /etc/mararc ] || exit 0
 
+RETVAL=0
 # See how we were called.
 case "$1" in
   start)
@@ -39,7 +40,6 @@ case "$1" in
 		sleep 1	
 		pid=`pidofproc maradns`
 		if [ -n "$pid" ]; then
-			RETVAL=0
 			touch /var/lock/subsys/maradns
 			log_success "maradns startup"
 			ok
@@ -50,7 +50,6 @@ case "$1" in
 		fi
 	else
 		msg_already_running "maraDNS"
-		exit 1
 	fi
 	;;
   stop)
@@ -60,19 +59,20 @@ case "$1" in
 		rm -f /var/lock/subsys/maradns >/dev/null 2>&1
 	else
 		msg_not_running "maraDNS"
-		exit 1
 	fi
 	;;
   status)
 	status maradns
+	exit $?
 	;;
-  restart|reload)
+  restart|force-reload)
 	$0 stop
 	$0 start
+	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
 esac
 
 exit $RETVAL
