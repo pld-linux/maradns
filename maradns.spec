@@ -1,8 +1,8 @@
 Summary:	A (currently) authoritative-only DNS server made with security in mind
 Summary(pl):	Tylko autorytatywny (na razie) serwer DNS zrobiony z my¶l± o bezpieczeñstwie
 Name:		maradns
-Version:	0.8.35
-Release:	2
+Version:	1.1.16
+Release:	1
 License:	Public Domain
 Group:		Networking/Daemons
 Source0:	http://www.maradns.org/download/%{name}-%{version}.tar.bz2
@@ -12,8 +12,13 @@ Source3:	mararc
 Prereq:		/sbin/chkconfig
 Prereq:		fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Conflicts:	bind
-Conflicts:	djbdns
+Provides:       nameserver
+Obsoletes:      bind
+Obsoletes:      djbdns
+Obsoletes:      pdns
+Obsoletes:      pdnsd
+Obsoletes:      dnsmasq
+Obsoletes:	sheerdns
 
 %description
 MaraDNS is (currently) an authoritative-only DNS server made with
@@ -57,20 +62,20 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_mandir}/man{1,5,8}} \
 	$RPM_BUILD_ROOT{%{_sysconfdir}/maradns,/etc/rc.d/init.d} \
 	$RPM_BUILD_ROOT%{_localstatedir}/log
 
-install server/maradns tuzona/zoneserver tuzona/getzone $RPM_BUILD_ROOT%{_sbindir}
+install server/maradns tcp/zoneserver tcp/getzone $RPM_BUILD_ROOT%{_sbindir}
 install tools/askmara $RPM_BUILD_ROOT%{_bindir}
 install tools/benchmark $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/maradns
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/zoneserver
 install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/mararc
-install doc/example_csv1 $RPM_BUILD_ROOT%{_sysconfdir}/maradns/db.example.com
+install doc/en/examples/example_csv1 $RPM_BUILD_ROOT%{_sysconfdir}/maradns/db.example.com
 
 > $RPM_BUILD_ROOT%{_localstatedir}/log/maradns
 > $RPM_BUILD_ROOT%{_localstatedir}/log/zoneserver
 
-install doc/man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1/
-install doc/man/*.5 $RPM_BUILD_ROOT%{_mandir}/man5/
-install doc/man/*.8 $RPM_BUILD_ROOT%{_mandir}/man8/
+install doc/en/man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1/
+install doc/en/man/*.5 $RPM_BUILD_ROOT%{_mandir}/man5/
+install doc/en/man/*.8 $RPM_BUILD_ROOT%{_mandir}/man8/
 
 rm -rf doc/{man,detailed/man_macros}
 
@@ -129,7 +134,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc 0QuickStart TODO.* 00README.FIRST CREDITS doc changelog.html
+%doc 0QuickStart TODO 00README.FIRST CREDITS doc CHANGELOG
 %attr(754,root,root) /etc/rc.d/init.d/maradns
 %attr(755,root,root) %{_sbindir}/getzone
 %attr(755,root,root) %{_sbindir}/maradns
