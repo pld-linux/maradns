@@ -1,7 +1,7 @@
 Summary:	A (currently) authoritative-only DNS server made with security in mind
 Name:		maradns
 Version:	0.8.26
-Release:	2
+Release:	3
 License:	Public domain
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -34,8 +34,8 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_mandir}/man{1,5,8}} \
 install server/maradns tuzona/zoneserver tuzona/getzone $RPM_BUILD_ROOT%{_sbindir}
 install tools/askmara $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/maradns
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/zoneserver
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/mararc
+install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/zoneserver
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/mararc
 install doc/example_csv1 $RPM_BUILD_ROOT%{_sysconfdir}/maradns/db.example.com
 mv doc/man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 mv doc/man/*.5 $RPM_BUILD_ROOT%{_mandir}/man5/
@@ -98,5 +98,5 @@ fi
 %{_mandir}/man1/*
 %{_mandir}/man5/*
 %{_mandir}/man8/*
-%config %{_sysconfdir}/mararc
-%config %{_sysconfdir}/maradns/db.example.com
+%attr(0640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/mararc
+%attr(0640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/maradns/db.example.com
