@@ -177,6 +177,7 @@ fi
 %attr(755,root,root) %{_sbindir}/maradns
 %attr(755,root,root) %{_bindir}/*
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mararc
+%dir %{_sysconfdir}/maradns
 %attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/maradns/db.example.com
 %attr(640,root,root) %ghost %{_localstatedir}/log/maradns
 %{_mandir}/man1/*
