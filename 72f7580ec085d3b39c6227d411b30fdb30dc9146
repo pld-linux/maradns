@@ -1,0 +1,5 @@
+- release: 3
+- bugfix for improper /etc/mararc and /etc/rc.d/init.d/zoneserver
+  %{SOURCE*} file assigment
+- added '%verify(not size mtime md5)' to %configs
+- %configs' default attributes are 0640
