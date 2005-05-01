@@ -1,0 +1,1 @@
+- added chkconfig --add zoneserver in %post script
