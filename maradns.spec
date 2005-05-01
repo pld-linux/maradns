@@ -12,7 +12,7 @@ Source2:	zoneserver.init
 Source3:	mararc
 Patch0:		%{name}-default_uid.patch
 URL:		http://www.maradns.org/
-BuildRequires:	rpmbuild(macros) >= 1.159
+BuildRequires:	rpmbuild(macros) >= 1.202
 PreReq:		rc-scripts
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
@@ -101,30 +101,12 @@ rm -rf doc/*/man
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`/usr/bin/getgid named`" ]; then
-	if [ "`/usr/bin/getgid named`" != "58" ]; then
-		echo "Error: group named doesn't have gid=58. Correct this before installing maradns." 1>&2
-		exit 1
-	fi
-else
-	if [ -n "`getgid maradns`" -a "`getgid maradns`" = "58" ]; then
-		/usr/sbin/groupmod -n named maradns
-	else
-		/usr/sbin/groupadd -g 58 named
-	fi
+%groupadd -g 58 named
+# TODO: move this to trigger
+if [ -n "`/bin/id -u maradns 2>/dev/null`" -a "`/bin/id -u maradns`" = "58" ]; then
+	/usr/sbin/usermod -d /tmp -l named maradns
 fi
-if [ -n "`/bin/id -u named 2>/dev/null`" ]; then
-	if [ "`/bin/id -u named`" != "58" ]; then
-		echo "Error: user named doesn't have uid=58. Correct this before installing maradns." 1>&2
-		exit 1
-	fi
-else
-	if [ -n "`/bin/id -u maradns 2>/dev/null`" -a "`/bin/id -u maradns`" = "58" ]; then
-		/usr/sbin/usermod -d /tmp -l named maradns
-	else
-		/usr/sbin/useradd -u 58 -g 58 -d /tmp -s /bin/false -c "maraDNS user" named
-	fi
-fi
+%useradd -u 58 -g 58 -d /tmp -s /bin/false -c "maraDNS user" named
 
 %post
 /sbin/chkconfig --add maradns
