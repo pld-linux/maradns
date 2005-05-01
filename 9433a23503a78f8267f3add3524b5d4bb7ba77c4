@@ -1,0 +1,8 @@
+- log files mark as %ghost (it will be good add ASAP logrotate support for
+  this files) - using %ghost determines initialize this files in %post
+  which determines adding fileutils o Prereq,
+- move all %doc to main mackage ane removed doc subpackage.
+- added passing FLAGS="%{rpmcflags}" and CC=%{__cc} (now spec is %{debug}
+  ready and also well optimized and seems ready for crosscompilation),
+- adde missing /sbin/chkconfig to Prereq,
+- spec adapterized, cut %changelog and few other small cosmetics/simplifications.
