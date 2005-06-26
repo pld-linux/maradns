@@ -102,7 +102,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %pre
 %groupadd -g 58 named
-# TODO: move this to trigger
 if [ "`/bin/id -u maradns 2>/dev/null`" = "58" ]; then
 	/usr/sbin/usermod -d /tmp -l named maradns
 fi
