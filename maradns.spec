@@ -2,7 +2,7 @@ Summary:	A (currently) authoritative-only DNS server made with security in mind
 Summary(pl):	Tylko autorytatywny (na razie) serwer DNS zrobiony z my¶l± o bezpieczeñstwie
 Name:		maradns
 Version:	1.1.41
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Networking/Daemons
 Source0:	http://www.maradns.org/download/1.1/%{name}-%{version}.tar.bz2
@@ -103,7 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 %pre
 %groupadd -g 58 named
 # TODO: move this to trigger
-if [ -n "`/bin/id -u maradns 2>/dev/null`" -a "`/bin/id -u maradns`" = "58" ]; then
+if [ -n "`/bin/id -u maradns 2>/dev/null`" ] && [ "`/bin/id -u maradns`" = "58" ]; then
 	/usr/sbin/usermod -d /tmp -l named maradns
 fi
 %useradd -u 58 -g 58 -d /tmp -s /bin/false -c "maraDNS user" named
