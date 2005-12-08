@@ -23,7 +23,7 @@ if is_yes "${NETWORKING}"; then
 else
 	exit 0
 fi
-			
+
 # Sanity check
 [ -e /etc/mararc ] || exit 0
 
@@ -37,7 +37,7 @@ case "$1" in
 		maradns -f /etc/mararc > /var/log/maradns &
 		busy
 		# what if it won't start on time? wait a bit for it :)
-		sleep 1	
+		sleep 1
 		pid=`pidofproc maradns`
 		if [ -n "$pid" ]; then
 			touch /var/lock/subsys/maradns

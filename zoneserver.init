@@ -23,7 +23,7 @@ if is_yes "${NETWORKING}"; then
 else
 	exit 0
 fi
-			
+
 # Sanity check
 [ -e /etc/mararc ] || exit 0
 
