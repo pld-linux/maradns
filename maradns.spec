@@ -13,17 +13,17 @@ Source3:	mararc
 Patch0:		%{name}-default_uid.patch
 URL:		http://www.maradns.org/
 BuildRequires:	rpmbuild(macros) >= 1.202
-PreReq:		rc-scripts
+Requires(post):	fileutils
+Requires(post,preun):	/sbin/chkconfig
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/groupmod
 Requires(pre):	/usr/sbin/useradd
 Requires(pre):	/usr/sbin/usermod
-Requires(post,preun):	/sbin/chkconfig
-Requires(post):	fileutils
-Requires(postun):	/usr/sbin/groupdel
-Requires(postun):	/usr/sbin/userdel
+Requires:	rc-scripts
 Provides:	group(named)
 Provides:	nameserver
 Provides:	user(named)
@@ -42,10 +42,10 @@ my¶l± o bezpieczeñstwie.
 Summary:	Handle zone transfers for MaraDNS
 Summary(pl):	Obs³uga transferów stref dla MaraDNS
 Group:		Networking/Daemons
-PreReq:		rc-scripts
-Requires(post,preun):	/sbin/chkconfig
 Requires(post):	fileutils
+Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name} = %{version}-%{release}
+Requires:	rc-scripts
 
 %description zoneserver
 zoneserver listens on port 53/tcp and handles dns zone transfers.
