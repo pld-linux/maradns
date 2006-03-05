@@ -12,7 +12,7 @@ Source2:	zoneserver.init
 Source3:	mararc
 Patch0:		%{name}-default_uid.patch
 URL:		http://www.maradns.org/
-BuildRequires:	rpmbuild(macros) >= 1.202
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post):	fileutils
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
@@ -109,11 +109,7 @@ fi
 
 %post
 /sbin/chkconfig --add maradns
-if [ -f /var/lock/subsys/maradns ]; then
-	/etc/rc.d/init.d/maradns restart 1>&2
-else
-	echo "Type \"/etc/rc.d/init.d/maradns start\" to start maradns" 1>&2
-fi
+%service maradns restart
 touch %{_localstatedir}/log/maradns
 chmod 640 %{_localstatedir}/log/maradns
 
@@ -125,27 +121,19 @@ fi
 
 %post zoneserver
 /sbin/chkconfig --add zoneserver
-if [ -f /var/lock/subsys/zoneserver ]; then
-	/etc/rc.d/init.d/zoneserver restart 1>&2
-else
-	echo "Type \"/etc/rc.d/init.d/zoneserver start\" to start zoneserver" 1>&2
-fi
+%service zoneserver restart
 touch %{_localstatedir}/log/zoneserver
 chmod 640 %{_localstatedir}/log/zoneserver
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/maradns ]; then
-		/etc/rc.d/init.d/maradns stop 1>&2
-	fi
+	%service maradns stop
 	/sbin/chkconfig --del maradns
 fi
 
 %preun zoneserver
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/zoneserver ]; then
-		/etc/rc.d/init.d/zoneserver stop 1>&2
-	fi
+	%service zoneserver stop
 	/sbin/chkconfig --del zoneserver
 fi
 
