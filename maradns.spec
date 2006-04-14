@@ -2,7 +2,7 @@ Summary:	A (currently) authoritative-only DNS server made with security in mind
 Summary(pl):	Tylko autorytatywny (na razie) serwer DNS zrobiony z my¶l± o bezpieczeñstwie
 Name:		maradns
 Version:	1.1.43
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Networking/Daemons
 Source0:	http://www.maradns.org/download/1.1/%{name}-%{version}.tar.bz2
