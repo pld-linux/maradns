@@ -1,5 +1,5 @@
 Summary:	A (currently) authoritative-only DNS server made with security in mind
-Summary(pl):	Tylko autorytatywny (na razie) serwer DNS zrobiony z my¶l± o bezpieczeñstwie
+Summary(pl.UTF-8):   Tylko autorytatywny (na razie) serwer DNS zrobiony z myÅ›lÄ… o bezpieczeÅ„stwie
 Name:		maradns
 Version:	1.1.43
 Release:	3
@@ -34,13 +34,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 MaraDNS is (currently) an authoritative-only DNS server made with
 security in mind.
 
-%description -l pl
+%description -l pl.UTF-8
 MaraDNS jest (na razie) tylko autorytatywnym serwerem DNS zrobionym z
-my¶l± o bezpieczeñstwie.
+myÅ›lÄ… o bezpieczeÅ„stwie.
 
 %package zoneserver
 Summary:	Handle zone transfers for MaraDNS
-Summary(pl):	Obs³uga transferów stref dla MaraDNS
+Summary(pl.UTF-8):   ObsÅ‚uga transferÃ³w stref dla MaraDNS
 Group:		Networking/Daemons
 Requires(post):	fileutils
 Requires(post,preun):	/sbin/chkconfig
@@ -53,10 +53,10 @@ zoneserver uses a configuration file, /etc/mararc by default, to
 determine various parameters, such as the IP to bind to, who is
 allowed to perform zone transfers, etc.
 
-%description zoneserver -l pl
-zoneserver s³ucha na porcie 53/tcp i obs³uguje transfery stref DNS.
-U¿ywa domy¶lnie pliku konfiguracyjnego /etc/mararc aby uzyskaæ
-parametry takie jak na jakim adresie ma s³uchaæ, kto mo¿e robiæ
+%description zoneserver -l pl.UTF-8
+zoneserver sÅ‚ucha na porcie 53/tcp i obsÅ‚uguje transfery stref DNS.
+UÅ¼ywa domyÅ›lnie pliku konfiguracyjnego /etc/mararc aby uzyskaÄ‡
+parametry takie jak na jakim adresie ma sÅ‚uchaÄ‡, kto moÅ¼e robiÄ‡
 transfery stref itp.
 
 %prep
