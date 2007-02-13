@@ -1,5 +1,5 @@
 Summary:	A (currently) authoritative-only DNS server made with security in mind
-Summary(pl.UTF-8):   Tylko autorytatywny (na razie) serwer DNS zrobiony z myślą o bezpieczeństwie
+Summary(pl.UTF-8):	Tylko autorytatywny (na razie) serwer DNS zrobiony z myślą o bezpieczeństwie
 Name:		maradns
 Version:	1.1.43
 Release:	3
@@ -40,7 +40,7 @@ myślą o bezpieczeństwie.
 
 %package zoneserver
 Summary:	Handle zone transfers for MaraDNS
-Summary(pl.UTF-8):   Obsługa transferów stref dla MaraDNS
+Summary(pl.UTF-8):	Obsługa transferów stref dla MaraDNS
 Group:		Networking/Daemons
 Requires(post):	fileutils
 Requires(post,preun):	/sbin/chkconfig
