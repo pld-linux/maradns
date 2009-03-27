@@ -1,12 +1,12 @@
 Summary:	A (currently) authoritative-only DNS server made with security in mind
 Summary(pl.UTF-8):	Tylko autorytatywny (na razie) serwer DNS zrobiony z myślą o bezpieczeństwie
 Name:		maradns
-Version:	1.1.43
-Release:	3
+Version:	1.3.07.09
+Release:	0.1
 License:	Public Domain
 Group:		Networking/Daemons
-Source0:	http://www.maradns.org/download/1.1/%{name}-%{version}.tar.bz2
-# Source0-md5:	cac028c40b3c2b5519c80481616397fb
+Source0:	http://www.maradns.org/download/1.3/%{version}/%{name}-%{version}.tar.bz2
+# Source0-md5:	1d221438fb4d9317263555262b9c652c
 Source1:	%{name}.init
 Source2:	zoneserver.init
 Source3:	mararc
@@ -61,10 +61,7 @@ transfery stref itp.
 
 %prep
 %setup -q
-%patch0 -p1
-
-# kill precompiled x86 objects
-rm -f {parse,qual,tcp}/*.o
+#%patch0 -p1
 
 %build
 %{__make} \
@@ -73,7 +70,7 @@ rm -f {parse,qual,tcp}/*.o
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_mandir}/{,fr/}man{1,5,8}} \
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_mandir}/man{1,5,8}} \
 	$RPM_BUILD_ROOT{%{_sysconfdir}/maradns,/etc/rc.d/init.d} \
 	$RPM_BUILD_ROOT%{_localstatedir}/log
 
@@ -91,11 +88,6 @@ install doc/en/examples/example_csv1 $RPM_BUILD_ROOT%{_sysconfdir}/maradns/db.ex
 install doc/en/man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install doc/en/man/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/en/man/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
-install doc/fr/man/*.1 $RPM_BUILD_ROOT%{_mandir}/fr/man1
-install doc/fr/man/*.5 $RPM_BUILD_ROOT%{_mandir}/fr/man5
-install doc/fr/man/*.8 $RPM_BUILD_ROOT%{_mandir}/fr/man8
-
-rm -rf doc/*/man
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -140,7 +132,6 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc 0QuickStart TODO 00README.FIRST CREDITS CHANGELOG doc/{README,en}
-%lang(fr) %doc doc/fr
 %attr(754,root,root) /etc/rc.d/init.d/maradns
 %attr(755,root,root) %{_sbindir}/getzone
 %attr(755,root,root) %{_sbindir}/maradns
@@ -153,9 +144,6 @@ fi
 %{_mandir}/man5/*
 %{_mandir}/man8/maradns*
 %{_mandir}/man8/duende*
-%lang(fr) %{_mandir}/fr/man1/*
-%lang(fr) %{_mandir}/fr/man5/*
-%lang(fr) %{_mandir}/fr/man8/maradns*
 
 %files zoneserver
 %defattr(644,root,root,755)
@@ -163,4 +151,3 @@ fi
 %attr(755,root,root) %{_sbindir}/zoneserver
 %attr(640,root,root) %ghost %{_localstatedir}/log/zoneserver
 %{_mandir}/man8/zoneserver*
-%lang(fr) %{_mandir}/fr/man8/zoneserver*
