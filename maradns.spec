@@ -131,7 +131,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc 0QuickStart TODO 00README.FIRST CREDITS CHANGELOG doc/{README,en}
+%doc 0QuickStart 00README.FIRST CREDITS CHANGELOG doc/{README,en}
 %attr(754,root,root) /etc/rc.d/init.d/maradns
 %attr(755,root,root) %{_sbindir}/getzone
 %attr(755,root,root) %{_sbindir}/maradns
